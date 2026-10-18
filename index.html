@@ -15,9 +15,6 @@
             --text-secondary: #475569;
             --border: #cbd5e1;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
-            --filled-bg: #ecfdf5;
-            --filled-text: #065f46;
-            --filled-border: #a7f3d0;
         }
 
         body {
@@ -32,7 +29,7 @@
 
         .container {
             width: 100%;
-            max-width: 1200px;
+            max-width: 1300px;
             margin: 0 auto;
             background-color: var(--card-bg);
             border-radius: 20px;
@@ -50,14 +47,8 @@
         h1 {
             font-size: 26px;
             color: var(--text-main);
-            margin: 0 0 6px 0;
+            margin: 0;
             font-weight: 800;
-        }
-
-        .subtitle {
-            color: var(--text-secondary);
-            font-size: 14px;
-            font-weight: 500;
         }
 
         /* Navegação por Meses */
@@ -68,14 +59,15 @@
             padding-bottom: 10px;
             margin-bottom: 25px;
             justify-content: center;
+            scrollbar-width: thin;
         }
 
         .month-btn {
             background-color: #f1f5f9;
             border: none;
             border-radius: 12px;
-            padding: 10px 18px;
-            font-size: 14px;
+            padding: 10px 16px;
+            font-size: 13px;
             font-weight: 600;
             color: var(--text-secondary);
             cursor: pointer;
@@ -94,7 +86,6 @@
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
-        /* Seções de Conteúdo */
         .month-section {
             display: none;
             animation: fadeIn 0.3s ease-in-out;
@@ -121,12 +112,12 @@
             width: 100%;
             border-collapse: collapse;
             text-align: left;
-            font-size: 14px;
+            font-size: 13px;
             background-color: white;
         }
 
         th, td {
-            padding: 12px 14px;
+            padding: 10px 12px;
             border-bottom: 1px solid var(--border);
             border-right: 1px solid var(--border);
         }
@@ -143,30 +134,64 @@
             white-space: nowrap;
         }
 
+        /* Inputs editáveis do cabeçalho de dias */
+        th input {
+            background: #ffffff;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: center;
+            width: 90%;
+            outline: none;
+        }
+        th input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-light);
+        }
+
         .time-col {
             font-weight: 600;
             color: var(--primary);
             background-color: #f8fafc;
             text-align: center;
             white-space: nowrap;
-            width: 130px;
+            width: 120px;
         }
 
         .slot-cell {
             cursor: pointer;
             transition: background-color 0.15s;
             text-align: center;
-            font-weight: 500;
+            vertical-align: middle;
+            min-width: 110px;
         }
 
         .slot-cell:hover {
             background-color: #f1f5f9;
         }
 
-        .slot-cell.filled {
-            background-color: var(--filled-bg);
-            color: var(--filled-text);
+        /* Tags agregadas para múltiplos nomes */
+        .participant-tags {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            align-items: center;
+        }
+
+        .tag {
+            background-color: var(--primary-light);
+            color: var(--primary);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
+            display: inline-block;
+            word-break: break-word;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .instructions {
@@ -179,103 +204,101 @@
             margin-bottom: 20px;
             text-align: center;
         }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-            h1 {
-                font-size: 22px;
-            }
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Adoração Ininterrupta</h1>
-            <div class="subtitle">Missão Guarulhos • Escala de Compromissos</div>
+            <h1>Missão Guarulhos</h1>
         </header>
 
         <div class="instructions">
-            💡 Dica: Clique em qualquer horário disponível na tabela abaixo para preencher o seu nome ou o da sua célula/pastoreio.
+            💡 Dica: Clique em qualquer horário disponível na tabela abaixo para preencher o seu nome ou o da sua célula/grupo. Várias pessoas podem preencher o mesmo horário!
         </div>
         
+        <!-- Navegação de Meses 2026 / 2027 -->
         <div class="months-nav" id="monthsNav">
-            <button class="month-btn active" onclick="showMonth('setembro', this)">Setembro</button>
-            <button class="month-btn" onclick="showMonth('outubro', this)">Outubro</button>
+            <button class="month-btn active" onclick="showMonth('jan-2026', this)">Jan 2026</button>
+            <button class="month-btn" onclick="showMonth('fev-2026', this)">Fev 2026</button>
+            <button class="month-btn" onclick="showMonth('mar-2026', this)">Mar 2026</button>
+            <button class="month-btn" onclick="showMonth('abr-2026', this)">Abr 2026</button>
+            <button class="month-btn" onclick="showMonth('mai-2026', this)">Mai 2026</button>
+            <button class="month-btn" onclick="showMonth('jun-2026', this)">Jun 2026</button>
+            <button class="month-btn" onclick="showMonth('jul-2026', this)">Jul 2026</button>
+            <button class="month-btn" onclick="showMonth('ago-2026', this)">Ago 2026</button>
+            <button class="month-btn" onclick="showMonth('set-2026', this)">Set 2026</button>
+            <button class="month-btn" onclick="showMonth('out-2026', this)">Out 2026</button>
+            <button class="month-btn" onclick="showMonth('nov-2026', this)">Nov 2026</button>
+            <button class="month-btn" onclick="showMonth('dez-2026', this)">Dez 2026</button>
+            <button class="month-btn" onclick="showMonth('jan-2027', this)">Jan 2027</button>
+            <button class="month-btn" onclick="showMonth('fev-2027', this)">Fev 2027</button>
+            <button class="month-btn" onclick="showMonth('mar-2027', this)">Mar 2027</button>
+            <button class="month-btn" onclick="showMonth('abr-2027', this)">Abr 2027</button>
+            <button class="month-btn" onclick="showMonth('mai-2027', this)">Mai 2027</button>
+            <button class="month-btn" onclick="showMonth('jun-2027', this)">Jun 2027</button>
+            <button class="month-btn" onclick="showMonth('jul-2027', this)">Jul 2027</button>
+            <button class="month-btn" onclick="showMonth('ago-2027', this)">Ago 2027</button>
+            <button class="month-btn" onclick="showMonth('set-2027', this)">Set 2027</button>
+            <button class="month-btn" onclick="showMonth('out-2027', this)">Out 2027</button>
+            <button class="month-btn" onclick="showMonth('nov-2027', this)">Nov 2027</button>
+            <button class="month-btn" onclick="showMonth('dez-2027', this)">Dez 2027</button>
         </div>
 
         <div id="contentContainer">
-            <!-- SETEMBRO -->
-            <div id="setembro" class="month-section active">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>HORÁRIO</th>
-                                <th>DIA 21/09<br>SEGUNDA</th>
-                                <th>DIA 22/09<br>TERÇA</th>
-                                <th>DIA 23/09<br>QUARTA</th>
-                                <th>DIA 24/09<br>QUINTA</th>
-                                <th>DIA 25/09<br>SEXTA</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="time-col">02:00 as 03:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">CV</td><td class="slot-cell filled" onclick="editSlot(this)">P1 e D1</td><td class="slot-cell filled" onclick="editSlot(this)">T2 / T3</td><td class="slot-cell filled" onclick="editSlot(this)">T4/T5</td></tr>
-                            <tr><td class="time-col">03:00 as 04:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">CV</td><td class="slot-cell filled" onclick="editSlot(this)">P1 e D1</td><td class="slot-cell filled" onclick="editSlot(this)">T2 / T3</td><td class="slot-cell filled" onclick="editSlot(this)">T4/T5</td></tr>
-                            <tr><td class="time-col">04:00 as 05:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">CV</td><td class="slot-cell filled" onclick="editSlot(this)">P1 e D1</td><td class="slot-cell filled" onclick="editSlot(this)">T2 / T3</td><td class="slot-cell filled" onclick="editSlot(this)">T4/T5</td></tr>
-                            <tr><td class="time-col">05:00 as 06:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">CV</td><td class="slot-cell filled" onclick="editSlot(this)">P1 e D1</td><td class="slot-cell filled" onclick="editSlot(this)">T2 / T3</td><td class="slot-cell filled" onclick="editSlot(this)">T4/T5</td></tr>
-                            <tr><td class="time-col">06:00 as 07:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Silmara</td><td class="slot-cell filled" onclick="editSlot(this)">João M</td></tr>
-                            <tr><td class="time-col">07:00 as 08:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Silmara</td><td class="slot-cell filled" onclick="editSlot(this)">João M</td></tr>
-                            <tr><td class="time-col">08:00 as 09:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2</td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio / Silmara</td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">09:00 as 10:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2</td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio / Silmara</td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2/João</td></tr>
-                            <tr><td class="time-col">10:00 as 11:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilanio / Silmara</td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2/João</td></tr>
-                            <tr><td class="time-col">11:00 as 12:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio / Silmara</td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2</td></tr>
-                            <tr><td class="time-col">12:00 as 13:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Silmara</td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">13:00 as 14:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Silmara Mônica</td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2</td></tr>
-                            <tr><td class="time-col">14:00 as 15:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio</td><td class="slot-cell filled" onclick="editSlot(this)">Christian / Felipe P2</td></tr>
-                            <tr><td class="time-col">15:00 as 16:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio</td><td class="slot-cell filled" onclick="editSlot(this)">Christian / Felipe P2</td></tr>
-                            <tr><td class="time-col">16:00 as 17:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio</td><td class="slot-cell filled" onclick="editSlot(this)">Felipe P2</td></tr>
-                            <tr><td class="time-col">17:00 as 18:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sheila</td><td class="slot-cell filled" onclick="editSlot(this)">Edilânio / Sofia</td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">18:00 as 19:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Sofia</td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">19:00 as 20:00</td><td class="slot-cell filled" onclick="editSlot(this)">MISSA</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Kat P2</td></tr>
-                            <tr><td class="time-col">20:00 as 21:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Lucas / El Shaddai</td><td class="slot-cell filled" onclick="editSlot(this)">Lucas / El Shaddai</td><td class="slot-cell filled" onclick="editSlot(this)">Lucas / El Shaddai</td></tr>
-                            <tr><td class="time-col">21:00 as 22:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Lucas / El Shaddai</td></tr>
-                            <tr><td class="time-col">22:00 as 23:00</td><td class="slot-cell filled" onclick="editSlot(this)">CONSELHO</td><td class="slot-cell filled" onclick="editSlot(this)">VOCACIONAL</td><td class="slot-cell filled" onclick="editSlot(this)">P2/ D2 e T1</td><td class="slot-cell filled" onclick="editSlot(this)">T6 - T9</td><td class="slot-cell filled" onclick="editSlot(this)">DEF1 - DEF2</td></tr>
-                            <tr><td class="time-col">23:00 as 00:00</td><td class="slot-cell filled" onclick="editSlot(this)">CONSELHO</td><td class="slot-cell filled" onclick="editSlot(this)">VOCACIONAL</td><td class="slot-cell filled" onclick="editSlot(this)">P2/ D2 e T1</td><td class="slot-cell filled" onclick="editSlot(this)">T6 - T9</td><td class="slot-cell filled" onclick="editSlot(this)">DEF1 - DEF2</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <!-- Gerador dinâmico de meses -->
+            <script>
+                const meses = [
+                    { id: 'jan-2026', nome: 'Janeiro de 2026' }, { id: 'fev-2026', nome: 'Fevereiro de 2026' },
+                    { id: 'mar-2026', nome: 'Março de 2026' }, { id: 'abr-2026', nome: 'Abril de 2026' },
+                    { id: 'mai-2026', nome: 'Maio de 2026' }, { id: 'jun-2026', nome: 'Junho de 2026' },
+                    { id: 'jul-2026', nome: 'Julho de 2026' }, { id: 'ago-2026', nome: 'Agosto de 2026' },
+                    { id: 'set-2026', nome: 'Setembro de 2026' }, { id: 'out-2026', nome: 'Outubro de 2026' },
+                    { id: 'nov-2026', nome: 'Novembro de 2026' }, { id: 'dez-2026', nome: 'Dezembro de 2026' },
+                    { id: 'jan-2027', nome: 'Janeiro de 2027' }, { id: 'fev-2027', nome: 'Fevereiro de 2027' },
+                    { id: 'mar-2027', nome: 'Março de 2027' }, { id: 'abr-2027', nome: 'Abril de 2027' },
+                    { id: 'mai-2027', nome: 'Maio de 2027' }, { id: 'jun-2027', nome: 'Junho de 2027' },
+                    { id: 'jul-2027', nome: 'Julho de 2027' }, { id: 'ago-2027', nome: 'Agosto de 2027' },
+                    { id: 'set-2027', nome: 'Setembro de 2027' }, { id: 'out-2027', nome: 'Outubro de 2027' },
+                    { id: 'nov-2027', nome: 'Novembro de 2027' }, { id: 'dez-2027', nome: 'Dezembro de 2027' }
+                ];
 
-            <!-- OUTUBRO -->
-            <div id="outubro" class="month-section">
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>HORÁRIO</th>
-                                <th>26/10 SEGUNDA</th>
-                                <th>27/10 TERÇA</th>
-                                <th>28/10 QUARTA</th>
-                                <th>29/10 QUINTA</th>
-                                <th>30/10 SEXTA</th>
-                                <th>31/10 SÁBADO</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td class="time-col">02:00 as 03:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">VOCACIONAL</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td></tr>
-                            <tr><td class="time-col">03:00 as 04:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">VOCACIONAL</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td></tr>
-                            <tr><td class="time-col">12:00 as 13:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Josefa - GO Emmanuel</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">13:00 as 14:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Nicole</td></tr>
-                            <tr><td class="time-col">16:00 as 17:00</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Nicole</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell filled" onclick="editSlot(this)">Nicole</td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">19:00 as 20:00</td><td class="slot-cell filled" onclick="editSlot(this)">MISSA</td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td><td class="slot-cell" onclick="editSlot(this)"></td></tr>
-                            <tr><td class="time-col">22:00 as 23:00</td><td class="slot-cell filled" onclick="editSlot(this)">CONSELHO</td><td class="slot-cell filled" onclick="editSlot(this)">CV</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td><td class="slot-cell filled" onclick="editSlot(this)">CÉLULAS</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                const diasSemana = [
+                    "Segunda (19h)", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Segunda (até 19h)"
+                ];
+
+                // Horários padrão da adoração ininterrupta (da 19h de uma segunda até 19h da seguinte)
+                const horarios = [
+                    "19:00 as 20:00", "20:00 as 21:00", "21:00 as 22:00", "22:00 as 23:00", 
+                    "23:00 as 00:00", "00:00 as 01:00", "01:00 as 02:00", "02:00 as 03:00", 
+                    "03:00 as 04:00", "04:00 as 05:00", "05:00 as 06:00", "06:00 as 07:00", 
+                    "07:00 as 08:00", "08:00 as 09:00", "09:00 as 10:00", "10:00 as 11:00", 
+                    "11:00 as 12:00", "12:00 as 13:00", "13:00 as 14:00", "14:00 as 15:00", 
+                    "15:00 as 16:00", "16:00 as 17:00", "17:00 as 18:00", "18:00 as 19:00"
+                ];
+
+                document.write(meses.map((m, index) => `
+                    <div id="${m.id}" class="month-section ${index === 0 ? 'active' : ''}">
+                        <h2 style="font-size:18px; color:var(--primary); margin-bottom:15px;">${m.nome}</h2>
+                        <div class="table-responsive">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>HORÁRIO</th>
+                                        ${diasSemana.map((d, i) => `<th><input type="text" value="Dia - ${d}" onchange="saveData()"></th>`).join('')}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    ${horarios.map(h => `
+                                        <tr>
+                                            <td class="time-col">${h}</td>${diasSemana.map(() => `<td class="slot-cell" onclick="addParticipant(this)"><div class="participant-tags"></div></td>`).join('')}
+                                        </tr>
+                                    `).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                `).join(''));
+            </script>
         </div>
     </div>
 
@@ -292,58 +315,68 @@
             btnElement.classList.add('active');
         }
 
-        function editSlot(cell) {
-            let currentName = cell.innerText.trim();
-            let newName = prompt("Digite seu nome ou sua célula para este horário:", currentName);
+        function addParticipant(cell) {
+            let container = cell.querySelector('.participant-tags');
+            let nome = prompt("Digite seu nome ou o da sua célula/grupo para este horário:");
             
-            if (newName !== null) {
-                cell.innerText = newName.trim();
-                if (newName.trim() !== "") {
-                    cell.classList.add('filled');
-                } else {
-                    cell.classList.remove('filled');
-                }
+            if (nome && nome.trim() !== "") {
+                let tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.innerText = nome.trim();
+                container.appendChild(tag);
                 saveData();
             }
         }
 
-        // Salvar alterações localmente no navegador
+        // Salvar estado completo (incluindo inputs de dias e participantes) no navegador
         function saveData() {
             let data = {};
             document.querySelectorAll('.month-section').forEach(sec => {
                 let id = sec.id;
-                data[id] = [];
+                let inputs = [];
+                sec.querySelectorAll('th input').forEach(input => inputs.push(input.value));
+                
+                let rowsData = [];
                 sec.querySelectorAll('tbody tr').forEach(row => {
-                    let rowData = [];
-                    row.querySelectorAll('td').forEach((td, idx) => {
-                        if(idx > 0) rowData.push(td.innerText);
+                    let rData = [];
+                    row.querySelectorAll('.participant-tags').forEach(container => {
+                        let tags = [];
+                        container.querySelectorAll('.tag').forEach(t => tags.push(t.innerText));
+                        rData.push(tags);
                     });
-                    data[id].push(rowData);
+                    rowsData.push(rData);
                 });
+                data[id] = { inputs, rowsData };
             });
-            localStorage.setItem('adoracao_escala', JSON.stringify(data));
+            localStorage.setItem('adoracao_escala_v2', JSON.stringify(data));
         }
 
-        // Carregar dados salvos ao abrir o site
+        // Carregar dados salvos ao abrir
         window.onload = function() {
-            let saved = localStorage.getItem('adoracao_escala');
+            let saved = localStorage.getItem('adoracao_escala_v2');
             if (saved) {
                 let data = JSON.parse(saved);
                 for (let monthId in data) {
                     let sec = document.getElementById(monthId);
                     if (sec) {
+                        let inputs = sec.querySelectorAll('th input');
+                        data[monthId].inputs.forEach((val, idx) => {
+                            if (inputs[idx]) inputs[idx].value = val;
+                        });
+
                         let rows = sec.querySelectorAll('tbody tr');
-                        data[monthId].forEach((rowData, rIdx) => {
+                        data[monthId].rowsData.forEach((rData, rIdx) => {
                             if (rows[rIdx]) {
-                                let tds = rows[rIdx].querySelectorAll('td');
-                                rowData.forEach((val, cIdx) => {
-                                    if (tds[cIdx + 1]) {
-                                        tds[cIdx + 1].innerText = val;
-                                        if (val.trim() !== "") {
-                                            tds[cIdx + 1].classList.add('filled');
-                                        } else {
-                                            tds[cIdx + 1].classList.remove('filled');
-                                        }
+                                let containers = rows[rIdx].querySelectorAll('.participant-tags');
+                                rData.forEach((tagsArray, cIdx) => {
+                                    if (containers[cIdx]) {
+                                        containers[cIdx].innerHTML = '';
+                                        tagsArray.forEach(tagName => {
+                                            let tag = document.createElement('div');
+                                            tag.className = 'tag';
+                                            tag.innerText = tagName;
+                                            containers[cIdx].appendChild(tag);
+                                        });
                                     }
                                 });
                             }
@@ -351,7 +384,7 @@
                     }
                 }
             }
-        }
+        };
     </script>
 </body>
 </html>
