@@ -15,6 +15,8 @@
             --text-secondary: #475569;
             --border: #cbd5e1;
             --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+            --vigilia-bg: #fef2f2;
+            --vigilia-text: #991b1b;
         }
 
         body {
@@ -29,7 +31,7 @@
 
         .container {
             width: 100%;
-            max-width: 1300px;
+            max-width: 1350px;
             margin: 0 auto;
             background-color: var(--card-bg);
             border-radius: 20px;
@@ -158,7 +160,16 @@
             background-color: #f8fafc;
             text-align: center;
             white-space: nowrap;
-            width: 120px;
+            width: 140px;
+        }
+
+        /* Estilo para as linhas de Vigília */
+        tr.vigilia-row td {
+            background-color: var(--vigilia-bg);
+        }
+        tr.vigilia-row .time-col {
+            background-color: #fee2e2;
+            color: var(--vigilia-text);
         }
 
         .slot-cell {
@@ -213,7 +224,7 @@
         </header>
 
         <div class="instructions">
-            💡 Dica: Clique em qualquer horário disponível e preencha com o seu nome ou o da sua célula/grupo.
+            💡 Dica: Clique em qualquer horário disponível na tabela abaixo para preencher o seu nome ou o da sua célula/grupo. Várias pessoas podem preencher o mesmo horário!
         </div>
         
         <!-- Navegação de Meses 2026 / 2027 -->
@@ -245,7 +256,6 @@
         </div>
 
         <div id="contentContainer">
-            <!-- Gerador dinâmico de meses -->
             <script>
                 const meses = [
                     { id: 'jan-2026', nome: 'Janeiro de 2026' }, { id: 'fev-2026', nome: 'Fevereiro de 2026' },
@@ -263,17 +273,35 @@
                 ];
 
                 const diasSemana = [
-                    "Segunda (19h)", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Segunda (até 19h)"
+                    "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo", "Segunda (Término)"
                 ];
 
-                // Horários padrão da adoração ininterrupta (da 19h de uma segunda até 19h da seguinte)
+                // Horários ordenados iniciando às 02:00 até fechar com a Vigília das 22h às 02h
                 const horarios = [
-                    "19:00 as 20:00", "20:00 as 21:00", "21:00 as 22:00", "22:00 as 23:00", 
-                    "23:00 as 00:00", "00:00 as 01:00", "01:00 as 02:00", "02:00 as 03:00", 
-                    "03:00 as 04:00", "04:00 as 05:00", "05:00 as 06:00", "06:00 as 07:00", 
-                    "07:00 as 08:00", "08:00 as 09:00", "09:00 as 10:00", "10:00 as 11:00", 
-                    "11:00 as 12:00", "12:00 as 13:00", "13:00 as 14:00", "14:00 as 15:00", 
-                    "15:00 as 16:00", "16:00 as 17:00", "17:00 as 18:00", "18:00 as 19:00"
+                    { t: "02:00 as 03:00", vigilia: true },
+                    { t: "03:00 as 04:00", vigilia: true },
+                    { t: "04:00 as 05:00", vigilia: true },
+                    { t: "05:00 as 06:00", vigilia: true },
+                    { t: "06:00 as 07:00", vigilia: false },
+                    { t: "07:00 as 08:00", vigilia: false },
+                    { t: "08:00 as 09:00", vigilia: false },
+                    { t: "09:00 as 10:00", vigilia: false },
+                    { t: "10:00 as 11:00", vigilia: false },
+                    { t: "11:00 as 12:00", vigilia: false },
+                    { t: "12:00 as 13:00", vigilia: false },
+                    { t: "13:00 as 14:00", vigilia: false },
+                    { t: "14:00 as 15:00", vigilia: false },
+                    { t: "15:00 as 16:00", vigilia: false },
+                    { t: "16:00 as 17:00", vigilia: false },
+                    { t: "17:00 as 18:00", vigilia: false },
+                    { t: "18:00 as 19:00", vigilia: false },
+                    { t: "19:00 as 20:00", vigilia: false },
+                    { t: "20:00 as 21:00", vigilia: false },
+                    { t: "21:00 as 22:00", vigilia: false },
+                    { t: "22:00 as 23:00", vigilia: true },
+                    { t: "23:00 as 00:00", vigilia: true },
+                    { t: "00:00 as 01:00", vigilia: true },
+                    { t: "01:00 as 02:00", vigilia: true }
                 ];
 
                 document.write(meses.map((m, index) => `
@@ -284,13 +312,13 @@
                                 <thead>
                                     <tr>
                                         <th>HORÁRIO</th>
-                                        ${diasSemana.map((d, i) => `<th><input type="text" value="Dia - ${d}" onchange="saveData()"></th>`).join('')}
+                                        ${diasSemana.map((d) => `<th><input type="text" value="Dia - ${d}" onchange="saveData()"></th>`).join('')}
                                     </tr>
                                 </thead>
                                 <tbody>
                                     ${horarios.map(h => `
-                                        <tr>
-                                            <td class="time-col">${h}</td>${diasSemana.map(() => `<td class="slot-cell" onclick="addParticipant(this)"><div class="participant-tags"></div></td>`).join('')}
+                                        <tr class="${h.vigilia ? 'vigilia-row' : ''}">
+                                            <td class="time-col">${h.t}</td>${diasSemana.map(() => `<td class="slot-cell" onclick="addParticipant(this)"><div class="participant-tags"></div></td>`).join('')}
                                         </tr>
                                     `).join('')}
                                 </tbody>
@@ -328,7 +356,6 @@
             }
         }
 
-        // Salvar estado completo (incluindo inputs de dias e participantes) no navegador
         function saveData() {
             let data = {};
             document.querySelectorAll('.month-section').forEach(sec => {
@@ -348,12 +375,11 @@
                 });
                 data[id] = { inputs, rowsData };
             });
-            localStorage.setItem('adoracao_escala_v2', JSON.stringify(data));
+            localStorage.setItem('adoracao_escala_v3', JSON.stringify(data));
         }
 
-        // Carregar dados salvos ao abrir
         window.onload = function() {
-            let saved = localStorage.getItem('adoracao_escala_v2');
+            let saved = localStorage.getItem('adoracao_escala_v3');
             if (saved) {
                 let data = JSON.parse(saved);
                 for (let monthId in data) {
